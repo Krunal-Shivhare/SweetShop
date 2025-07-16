@@ -166,28 +166,30 @@ export const NavBar: React.FC = () => {
               
               <div className="space-y-4">
                 {/* Category Filter */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Category</label>
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      variant={!localFilters.category ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => handleCategoryChange(undefined)}
-                    >
-                      All
-                    </Button>
-                    {state.categories.map((category) => (
+                {state.categories.length > 0 && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Category</label>
+                    <div className="flex flex-wrap gap-2">
                       <Button
-                        key={category}
-                        variant={localFilters.category === category ? "default" : "outline"}
+                        variant={!localFilters.category ? "default" : "outline"}
                         size="sm"
-                        onClick={() => handleCategoryChange(category)}
+                        onClick={() => handleCategoryChange(undefined)}
                       >
-                        {category}
+                        All
                       </Button>
-                    ))}
+                      {state.categories.map((category) => (
+                        <Button
+                          key={category}
+                          variant={localFilters.category === category ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleCategoryChange(category)}
+                        >
+                          {category}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Price Range */}
                 <div className="space-y-2">

@@ -142,35 +142,46 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
 
             <div className="space-y-2">
               <Label htmlFor="edit-category">Category</Label>
-              <Select
-                value={showCustomCategory ? 'Other' : formData.category}
-                onValueChange={handleCategoryChange}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {state.categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="Other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-              {showCustomCategory && (
-                <div className="space-y-2">
-                  <Label htmlFor="edit-custom-category">Custom Category Name</Label>
-                  <Input
-                    id="edit-custom-category"
-                    value={customCategory}
-                    onChange={(e) => {
-                      setCustomCategory(e.target.value);
-                      setFormData(prev => ({ ...prev, category: e.target.value }));
-                    }}
-                    placeholder="Enter custom category name"
-                  />
-                </div>
+              {state.categories.length > 0 ? (
+                <>
+                  <Select
+                    value={showCustomCategory ? 'Other' : formData.category}
+                    onValueChange={handleCategoryChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {state.categories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {showCustomCategory && (
+                    <div className="space-y-2">
+                      <Label htmlFor="edit-custom-category">Category Name</Label>
+                      <Input
+                        id="edit-custom-category"
+                        value={customCategory}
+                        onChange={(e) => {
+                          setCustomCategory(e.target.value);
+                          setFormData(prev => ({ ...prev, category: e.target.value }));
+                        }}
+                        placeholder="Enter category name"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Input
+                  id="edit-category"
+                  value={formData.category}
+                  onChange={(e) => handleInputChange('category', e.target.value)}
+                  placeholder="Enter category name"
+                />
               )}
             </div>
 
@@ -247,35 +258,46 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
 
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
-            <Select
-              value={showCustomCategory ? 'Other' : formData.category}
-              onValueChange={handleCategoryChange}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                {state.categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-                <SelectItem value="Other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-            {showCustomCategory && (
-              <div className="space-y-2">
-                <Label htmlFor="custom-category">Custom Category Name</Label>
-                <Input
-                  id="custom-category"
-                  value={customCategory}
-                  onChange={(e) => {
-                    setCustomCategory(e.target.value);
-                    setFormData(prev => ({ ...prev, category: e.target.value }));
-                  }}
-                  placeholder="Enter custom category name"
-                />
-              </div>
+            {state.categories.length > 0 ? (
+              <>
+                <Select
+                  value={showCustomCategory ? 'Other' : formData.category}
+                  onValueChange={handleCategoryChange}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {state.categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                {showCustomCategory && (
+                  <div className="space-y-2">
+                    <Label htmlFor="custom-category">Category Name</Label>
+                    <Input
+                      id="custom-category"
+                      value={customCategory}
+                      onChange={(e) => {
+                        setCustomCategory(e.target.value);
+                        setFormData(prev => ({ ...prev, category: e.target.value }));
+                      }}
+                      placeholder="Enter category name"
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <Input
+                id="category"
+                value={formData.category}
+                onChange={(e) => handleInputChange('category', e.target.value)}
+                placeholder="Enter category name"
+              />
             )}
           </div>
 
