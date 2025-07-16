@@ -30,6 +30,44 @@ export const NavBar: React.FC = () => {
     actions.searchSweets(filters);
   };
 
+  // Real-time search as user types
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    const filters: SearchFilters = {
+      ...localFilters,
+      name: value || undefined,
+      minPrice: priceRange.min ? parseFloat(priceRange.min) : undefined,
+      maxPrice: priceRange.max ? parseFloat(priceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
+  // Real-time category filter
+  const handleCategoryChange = (category: Sweet['category'] | undefined) => {
+    const newFilters = { ...localFilters, category };
+    setLocalFilters(newFilters);
+    const filters: SearchFilters = {
+      ...newFilters,
+      name: searchTerm || undefined,
+      minPrice: priceRange.min ? parseFloat(priceRange.min) : undefined,
+      maxPrice: priceRange.max ? parseFloat(priceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
+  // Real-time price range filter
+  const handlePriceRangeChange = (field: 'min' | 'max', value: string) => {
+    const newPriceRange = { ...priceRange, [field]: value };
+    setPriceRange(newPriceRange);
+    const filters: SearchFilters = {
+      ...localFilters,
+      name: searchTerm || undefined,
+      minPrice: newPriceRange.min ? parseFloat(newPriceRange.min) : undefined,
+      maxPrice: newPriceRange.max ? parseFloat(newPriceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
   const handleClearFilters = () => {
     setSearchTerm('');
     setLocalFilters({});
@@ -38,14 +76,7 @@ export const NavBar: React.FC = () => {
   };
 
   const handleClearSearch = () => {
-    setSearchTerm('');
-    const filters: SearchFilters = {
-      ...localFilters,
-      name: undefined,
-      minPrice: priceRange.min ? parseFloat(priceRange.min) : undefined,
-      maxPrice: priceRange.max ? parseFloat(priceRange.max) : undefined,
-    };
-    actions.searchSweets(filters);
+    handleSearchChange('');
   };
 
   const handleSort = (field: SortField) => {
@@ -97,8 +128,7 @@ export const NavBar: React.FC = () => {
             <Input
               placeholder="Search sweets by name..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className={`pl-10 pr-10 ${searchTerm ? 'border-primary' : ''}`}
             />
             {searchTerm && (
@@ -135,58 +165,31 @@ export const NavBar: React.FC = () => {
               <DropdownMenuSeparator />
               
               <div className="space-y-4">
-                {/* Active Filters Summary */}
-                {hasActiveFilters && (
+                {/* Category Filter */}
+                {state.categories.length > 0 && (
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Active Filters</label>
-                    <div className="flex flex-wrap gap-1">
-                      {searchTerm && (
-                        <Badge variant="outline" className="text-xs">
-                          Search: "{searchTerm}"
-                        </Badge>
-                      )}
-                      {localFilters.category && (
-                        <Badge variant="outline" className="text-xs">
-                          Category: {localFilters.category}
-                        </Badge>
-                      )}
-                      {(priceRange.min || priceRange.max) && (
-                        <Badge variant="outline" className="text-xs">
-                          Price: ${priceRange.min || '0'} - ${priceRange.max || '∞'}
-                        </Badge>
-                      )}
+                    <label className="text-sm font-medium">Category</label>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        variant={!localFilters.category ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => handleCategoryChange(undefined)}
+                      >
+                        All
+                      </Button>
+                      {state.categories.map((category) => (
+                        <Button
+                          key={category}
+                          variant={localFilters.category === category ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleCategoryChange(category)}
+                        >
+                          {category}
+                        </Button>
+                      ))}
                     </div>
                   </div>
                 )}
-
-                {/* Category Filter */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Category</label>
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      variant={!localFilters.category ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setLocalFilters(prev => ({ ...prev, category: undefined }))}
-                    >
-                      All
-                    </Button>
-                    {['Chocolate', 'Cakes', 'Candies', 'Ice Cream', 'Snacks'].map((category) => (
-                      <Button
-                        key={category}
-                        variant={localFilters.category === category ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => 
-                          setLocalFilters(prev => ({ 
-                            ...prev, 
-                            category: category as Sweet['category']
-                          }))
-                        }
-                      >
-                        {category}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Price Range */}
                 <div className="space-y-2">
@@ -198,7 +201,7 @@ export const NavBar: React.FC = () => {
                       step="0.01"
                       min="0"
                       value={priceRange.min}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                      onChange={(e) => handlePriceRangeChange('min', e.target.value)}
                     />
                     <Input
                       placeholder="Max ($)"
@@ -206,7 +209,7 @@ export const NavBar: React.FC = () => {
                       step="0.01"
                       min="0"
                       value={priceRange.max}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                      onChange={(e) => handlePriceRangeChange('max', e.target.value)}
                     />
                   </div>
                 </div>

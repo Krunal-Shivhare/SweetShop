@@ -23,6 +23,45 @@ export const SearchAndFilter: React.FC = () => {
     actions.searchSweets(filters);
   };
 
+  // Real-time search as user types
+  const handleSearchChange = (value: string) => {
+    const newFilters = { ...localFilters, name: value || undefined };
+    setLocalFilters(newFilters);
+    const filters: SearchFilters = {
+      ...newFilters,
+      minPrice: priceRange.min ? parseFloat(priceRange.min) : undefined,
+      maxPrice: priceRange.max ? parseFloat(priceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
+  // Real-time category filter
+  const handleCategoryChange = (value: string) => {
+    const newFilters = { 
+      ...localFilters, 
+      category: value === 'all' ? undefined : value as Sweet['category']
+    };
+    setLocalFilters(newFilters);
+    const filters: SearchFilters = {
+      ...newFilters,
+      minPrice: priceRange.min ? parseFloat(priceRange.min) : undefined,
+      maxPrice: priceRange.max ? parseFloat(priceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
+  // Real-time price range filter
+  const handlePriceRangeChange = (field: 'min' | 'max', value: string) => {
+    const newPriceRange = { ...priceRange, [field]: value };
+    setPriceRange(newPriceRange);
+    const filters: SearchFilters = {
+      ...localFilters,
+      minPrice: newPriceRange.min ? parseFloat(newPriceRange.min) : undefined,
+      maxPrice: newPriceRange.max ? parseFloat(newPriceRange.max) : undefined,
+    };
+    actions.searchSweets(filters);
+  };
+
   const handleClearFilters = () => {
     setLocalFilters({});
     setPriceRange({ min: '', max: '' });
@@ -78,7 +117,7 @@ export const SearchAndFilter: React.FC = () => {
             id="search-name"
             placeholder="Enter sweet name..."
             value={localFilters.name || ''}
-            onChange={(e) => setLocalFilters(prev => ({ ...prev, name: e.target.value || undefined }))}
+            onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
 
@@ -87,23 +126,18 @@ export const SearchAndFilter: React.FC = () => {
           <Label htmlFor="filter-category">Filter by category</Label>
           <Select
             value={localFilters.category || 'all'}
-            onValueChange={(value) => 
-              setLocalFilters(prev => ({ 
-                ...prev, 
-                category: value === 'all' ? undefined : value as Sweet['category']
-              }))
-            }
+            onValueChange={handleCategoryChange}
           >
             <SelectTrigger>
               <SelectValue placeholder="All categories" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All categories</SelectItem>
-              <SelectItem value="Chocolate">Chocolate</SelectItem>
-              <SelectItem value="Cakes">Cakes</SelectItem>
-              <SelectItem value="Candies">Candies</SelectItem>
-              <SelectItem value="Ice Cream">Ice Cream</SelectItem>
-              <SelectItem value="Snacks">Snacks</SelectItem>
+              {state.categories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -118,7 +152,7 @@ export const SearchAndFilter: React.FC = () => {
               step="0.01"
               min="0"
               value={priceRange.min}
-              onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+              onChange={(e) => handlePriceRangeChange('min', e.target.value)}
             />
             <Input
               placeholder="Max ($)"
@@ -126,7 +160,7 @@ export const SearchAndFilter: React.FC = () => {
               step="0.01"
               min="0"
               value={priceRange.max}
-              onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+              onChange={(e) => handlePriceRangeChange('max', e.target.value)}
             />
           </div>
         </div>

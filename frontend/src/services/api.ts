@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export interface Sweet {
   id: number;
   name: string;
-  category: 'Chocolate' | 'Cakes' | 'Candies' | 'Ice Cream' | 'Snacks';
+  category: string;
   price: number;
   in_stock: number;
   created_at: string;

@@ -1,7 +1,7 @@
 export interface Sweet {
   id: number;
   name: string;
-  category: 'Chocolate' | 'Cakes' | 'Candies' | 'Ice Cream' | 'Snacks';
+  category: string;
   price: number;
   in_stock: number;
   created_at?: string;
