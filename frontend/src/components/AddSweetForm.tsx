@@ -143,7 +143,7 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
             <div className="space-y-2">
               <Label htmlFor="edit-category">Category</Label>
               <Select
-                value={formData.category || (showCustomCategory ? 'Other' : '')}
+                value={showCustomCategory ? 'Other' : formData.category}
                 onValueChange={handleCategoryChange}
               >
                 <SelectTrigger>
@@ -248,7 +248,7 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
             <Select
-              value={formData.category || (showCustomCategory ? 'Other' : '')}
+              value={showCustomCategory ? 'Other' : formData.category}
               onValueChange={handleCategoryChange}
             >
               <SelectTrigger>
