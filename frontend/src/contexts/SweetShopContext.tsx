@@ -1,9 +1,11 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { Sweet, PurchaseRequest, SearchFilters, SortField, SortOrder } from '../types/sweet';
 import { useSweets, useCreateSweet, useUpdateSweet, useDeleteSweet } from '../hooks/useSweets';
+import { useCategories } from '../hooks/useCategories';
 
 interface SweetShopState {
   sweets: Sweet[];
+  categories: string[];
   searchFilters: SearchFilters;
   sortField: SortField;
   sortOrder: SortOrder;
@@ -31,6 +33,7 @@ const SweetShopContext = createContext<SweetShopContextType | undefined>(undefin
 export const SweetShopProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // API hooks
   const { data: sweets = [], isLoading: isLoadingSweets, error: sweetsError } = useSweets();
+  const { data: categories = [], isLoading: isLoadingCategories, error: categoriesError } = useCategories();
   const createSweetMutation = useCreateSweet();
   const updateSweetMutation = useUpdateSweet();
   const deleteSweetMutation = useDeleteSweet();
@@ -147,11 +150,12 @@ export const SweetShopProvider: React.FC<{ children: ReactNode }> = ({ children 
 
   const state: SweetShopState = {
     sweets: filteredAndSortedSweets,
+    categories,
     searchFilters,
     sortField,
     sortOrder,
-    isLoading: isLoadingSweets || createSweetMutation.isPending || updateSweetMutation.isPending || deleteSweetMutation.isPending,
-    error: sweetsError?.message || null,
+    isLoading: isLoadingSweets || isLoadingCategories || createSweetMutation.isPending || updateSweetMutation.isPending || deleteSweetMutation.isPending,
+    error: sweetsError?.message || categoriesError?.message || null,
   };
 
   const contextValue = React.useMemo(() => ({

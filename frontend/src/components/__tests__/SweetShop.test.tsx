@@ -20,11 +20,10 @@ describe('SweetShop Integration', () => {
   it('should render the Sweet Shop interface', () => {
     render(<SweetShopWithProvider />);
     
-    expect(screen.getByText('Sweet Shop Management')).toBeInTheDocument();
+    expect(screen.getByText('Management Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Manage your sweet inventory with ease')).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /inventory/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /add sweet/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /analytics/i })).toBeInTheDocument();
   });
 
   it('should display empty state when no sweets exist', () => {
@@ -62,13 +61,6 @@ describe('SweetShop Integration', () => {
     const user = userEvent.setup();
     render(<SweetShopWithProvider />);
     
-    // Click on Analytics tab
-    const analyticsTab = screen.getByRole('tab', { name: /analytics/i });
-    await user.click(analyticsTab);
-
-    expect(screen.getByText('Inventory Analytics')).toBeInTheDocument();
-    expect(screen.getByText('Track your sweet shop\'s performance')).toBeInTheDocument();
-
     // Click on Add Sweet tab
     const addTab = screen.getByRole('tab', { name: /add sweet/i });
     await user.click(addTab);

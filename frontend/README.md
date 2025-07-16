@@ -22,11 +22,7 @@ A comprehensive sweet shop inventory management system built with React, TypeScr
 - **Restock Sweets**: Increase quantity of existing sweets
 - **Stock Alerts**: Visual indicators for out-of-stock and low-stock items
 
-### Analytics Dashboard
-- **Inventory Stats**: Total products, items, and inventory value
-- **Category Breakdown**: Visual breakdown by sweet categories
-- **Stock Status**: Monitor out-of-stock and low-stock items
-- **Average Pricing**: Track average prices across inventory
+
 
 ## 🎨 Design Features
 
@@ -116,10 +112,7 @@ npm run test:coverage
 3. **Edit**: Click edit icon to modify sweet details
 4. **Delete**: Click trash icon to remove from inventory
 
-### Viewing Analytics
-1. Click "Analytics" tab
-2. View inventory statistics and category breakdown
-3. Monitor stock alerts and trends
+
 
 ## 🏗️ Architecture
 
@@ -138,7 +131,7 @@ src/
 │   ├── SweetCard.tsx    # Sweet display card
 │   ├── AddSweetForm.tsx # Add/edit sweet form
 │   ├── SearchAndFilter.tsx # Search and filter panel
-│   └── InventoryStats.tsx  # Analytics dashboard
+
 ├── contexts/            # React context providers
 ├── services/            # Business logic layer
 ├── types/               # TypeScript definitions
@@ -224,7 +217,7 @@ This project is for educational purposes as part of a coding kata exercise.
 
 - **Persistence**: Local storage or database integration
 - **User Authentication**: Multi-user support
-- **Sales Tracking**: Purchase history and analytics
+
 - **Barcode Scanning**: Quick product addition
 - **Print Reports**: Inventory and sales reports
 - **API Integration**: External sweet databases

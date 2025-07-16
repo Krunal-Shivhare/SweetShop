@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { SweetCard } from './SweetCard';
 import { AddSweetForm } from './AddSweetForm';
 import { NavBar } from './NavBar';
-import { InventoryStats } from './InventoryStats';
+
 import { ErrorBoundary } from './ErrorBoundary';
 import { useSweetShop } from '../contexts/SweetShopContext';
 import { Sweet } from '../types/sweet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Loader2, Candy, BarChart3, Package, AlertCircle } from 'lucide-react';
+import { Loader2, Candy, Package, AlertCircle } from 'lucide-react';
 
 export const SweetShop: React.FC = () => {
   const { state, actions } = useSweetShop();
@@ -71,7 +71,7 @@ export const SweetShop: React.FC = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-fit lg:grid-cols-3 mx-auto">
+          <TabsList className="grid w-full grid-cols-2 lg:w-fit lg:grid-cols-2 mx-auto">
             <TabsTrigger value="inventory" className="flex items-center gap-2">
               <Package className="h-4 w-4" />
               Inventory
@@ -79,10 +79,6 @@ export const SweetShop: React.FC = () => {
             <TabsTrigger value="add" className="flex items-center gap-2">
               <Candy className="h-4 w-4" />
               {editingSweet ? 'Edit Sweet' : 'Add Sweet'}
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              Analytics
             </TabsTrigger>
           </TabsList>
 
@@ -99,21 +95,7 @@ export const SweetShop: React.FC = () => {
                     <p className="text-muted-foreground mb-4">
                       Start by adding some delicious sweets to your shop!
                     </p>
-                    <div className="flex gap-4 justify-center flex-wrap">
-                      <AddSweetForm />
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        onClick={() => {
-                          // Sample data will be loaded from the API
-                          // You can add some sample sweets through the Add Sweet form
-                        }}
-                        className="shadow-lg"
-                      >
-                        <Package className="h-4 w-4 mr-2" />
-                        Add Sample Data
-                      </Button>
-                    </div>
+                    <AddSweetForm />
                   </div>
                 )}
 
@@ -157,16 +139,7 @@ export const SweetShop: React.FC = () => {
             </div>
           </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold mb-2">Inventory Analytics</h2>
-              <p className="text-muted-foreground">
-                Track your sweet shop's performance and inventory status.
-              </p>
-            </div>
-            <InventoryStats />
-          </TabsContent>
+
         </Tabs>
       </div>
     </div>

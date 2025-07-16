@@ -34,34 +34,42 @@ export const SweetCard: React.FC<SweetCardProps> = ({ sweet, onEdit }) => {
     );
   }
 
-  const getCategoryVariant = (category: Sweet['category']) => {
-    switch (category) {
-      case 'Chocolate':
+  const getCategoryVariant = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'chocolate':
         return 'chocolate';
-      case 'Cakes':
+      case 'cakes':
+      case 'cakes & pastries':
         return 'pastry';
-      case 'Candies':
+      case 'candies':
+      case 'candies & gummies':
         return 'candy';
-      case 'Ice Cream':
+      case 'ice cream':
+      case 'ice cream & frozen':
         return 'default';
-      case 'Snacks':
+      case 'snacks':
+      case 'snacks & treats':
         return 'default';
       default:
         return 'default';
     }
   };
 
-  const getCategoryColor = (category: Sweet['category']) => {
-    switch (category) {
-      case 'Chocolate':
+  const getCategoryColor = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'chocolate':
         return 'bg-chocolate text-white';
-      case 'Cakes':
+      case 'cakes':
+      case 'cakes & pastries':
         return 'bg-pastry text-foreground';
-      case 'Candies':
+      case 'candies':
+      case 'candies & gummies':
         return 'bg-candy text-white';
-      case 'Ice Cream':
+      case 'ice cream':
+      case 'ice cream & frozen':
         return 'bg-blue-100 text-blue-800';
-      case 'Snacks':
+      case 'snacks':
+      case 'snacks & treats':
         return 'bg-orange-100 text-orange-800';
       default:
         return 'bg-muted text-muted-foreground';

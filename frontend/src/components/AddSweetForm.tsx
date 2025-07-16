@@ -16,16 +16,19 @@ interface AddSweetFormProps {
 }
 
 export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditComplete }) => {
-  const { actions } = useSweetShop();
+  const { state, actions } = useSweetShop();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     name: editSweet?.name || '',
-    category: editSweet?.category || 'Chocolate' as Sweet['category'],
+    category: editSweet?.category || '',
     price: editSweet?.price || 0,
     in_stock: editSweet?.in_stock || 0,
   });
+
+  const [customCategory, setCustomCategory] = useState('');
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -74,10 +77,12 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
       // Reset form
       setFormData({
         name: '',
-        category: 'Chocolate',
+        category: '',
         price: 0,
         in_stock: 0,
       });
+      setCustomCategory('');
+      setShowCustomCategory(false);
       setErrors({});
       setIsOpen(false);
     } catch (error) {
@@ -97,6 +102,17 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
         delete newErrors[field];
         return newErrors;
       });
+    }
+  };
+
+  const handleCategoryChange = (value: string) => {
+    if (value === 'Other') {
+      setShowCustomCategory(true);
+      setFormData(prev => ({ ...prev, category: '' }));
+    } else {
+      setShowCustomCategory(false);
+      setCustomCategory('');
+      setFormData(prev => ({ ...prev, category: value }));
     }
   };
 
@@ -127,20 +143,35 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
             <div className="space-y-2">
               <Label htmlFor="edit-category">Category</Label>
               <Select
-                value={formData.category}
-                onValueChange={(value) => handleInputChange('category', value as Sweet['category'])}
+                value={formData.category || (showCustomCategory ? 'Other' : '')}
+                onValueChange={handleCategoryChange}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Chocolate">Chocolate</SelectItem>
-                  <SelectItem value="Cakes">Cakes</SelectItem>
-                  <SelectItem value="Candies">Candies</SelectItem>
-                  <SelectItem value="Ice Cream">Ice Cream</SelectItem>
-                  <SelectItem value="Snacks">Snacks</SelectItem>
+                  {state.categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>
+              {showCustomCategory && (
+                <div className="space-y-2">
+                  <Label htmlFor="edit-custom-category">Custom Category Name</Label>
+                  <Input
+                    id="edit-custom-category"
+                    value={customCategory}
+                    onChange={(e) => {
+                      setCustomCategory(e.target.value);
+                      setFormData(prev => ({ ...prev, category: e.target.value }));
+                    }}
+                    placeholder="Enter custom category name"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -217,20 +248,35 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
             <Select
-              value={formData.category}
-              onValueChange={(value) => handleInputChange('category', value as Sweet['category'])}
+              value={formData.category || (showCustomCategory ? 'Other' : '')}
+              onValueChange={handleCategoryChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Chocolate">Chocolate</SelectItem>
-                <SelectItem value="Cakes">Cakes</SelectItem>
-                <SelectItem value="Candies">Candies</SelectItem>
-                <SelectItem value="Ice Cream">Ice Cream</SelectItem>
-                <SelectItem value="Snacks">Snacks</SelectItem>
+                {state.categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+                <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
+            {showCustomCategory && (
+              <div className="space-y-2">
+                <Label htmlFor="custom-category">Custom Category Name</Label>
+                <Input
+                  id="custom-category"
+                  value={customCategory}
+                  onChange={(e) => {
+                    setCustomCategory(e.target.value);
+                    setFormData(prev => ({ ...prev, category: e.target.value }));
+                  }}
+                  placeholder="Enter custom category name"
+                />
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
