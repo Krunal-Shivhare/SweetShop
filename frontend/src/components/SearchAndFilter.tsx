@@ -147,7 +147,7 @@ export const SearchAndFilter: React.FC = () => {
           <Label>Price range</Label>
           <div className="flex gap-2">
             <Input
-              placeholder="Min ($)"
+              placeholder="Min (₹)"
               type="number"
               step="0.01"
               min="0"
@@ -155,7 +155,7 @@ export const SearchAndFilter: React.FC = () => {
               onChange={(e) => handlePriceRangeChange('min', e.target.value)}
             />
             <Input
-              placeholder="Max ($)"
+              placeholder="Max (₹)"
               type="number"
               step="0.01"
               min="0"

@@ -172,7 +172,7 @@ export const SweetCard: React.FC<SweetCardProps> = ({ sweet, onEdit }) => {
       
       <CardContent className="space-y-3">
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-primary">${sweet.price.toFixed(2)}</span>
+          <span className="text-2xl font-bold text-primary">₹{sweet.price.toFixed(2)}</span>
           <div className="text-right">
             <div className="flex items-center gap-1">
               <Package className="h-4 w-4 text-muted-foreground" />
