@@ -186,7 +186,7 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="edit-price">Price ($)</Label>
+              <Label htmlFor="edit-price">Price (₹)</Label>
               <Input
                 id="edit-price"
                 type="number"
@@ -302,7 +302,7 @@ export const AddSweetForm: React.FC<AddSweetFormProps> = ({ editSweet, onEditCom
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="price">Price ($)</Label>
+            <Label htmlFor="price">Price (₹)</Label>
             <Input
               id="price"
               type="number"

@@ -1,63 +1,64 @@
 const { pool } = require('../database/db');
 require('dotenv').config({ path: './config.env' });
 
-// Sample data for 5 categories with 3-5 items each
+// Sample data for 5 categories of Indian sweets with 3-5 items each
 const sampleData = [
-  // Category 1: Chocolate
+  // Category 1: Milk-based Sweets
   {
-    category: 'Chocolate',
+    category: 'Milk-based Sweets',
     items: [
-      { name: 'Dark Chocolate Truffle', price: 3.50, in_stock: 25 },
-      { name: 'Milk Chocolate Bar', price: 2.25, in_stock: 40 },
-      { name: 'White Chocolate Bonbons', price: 4.00, in_stock: 15 },
-      { name: 'Chocolate Covered Strawberries', price: 5.50, in_stock: 20 },
-      { name: 'Chocolate Fudge Brownie', price: 3.75, in_stock: 30 }
+      { name: 'Gulab Jamun', price: 15.00, in_stock: 30 },
+      { name: 'Rasgulla', price: 12.50, in_stock: 35 },
+      { name: 'Rasmalai', price: 18.00, in_stock: 25 },
+      { name: 'Kheer', price: 22.00, in_stock: 20 },
+      { name: 'Sandesh', price: 16.50, in_stock: 28 }
     ]
   },
   
-  // Category 2: Cakes & Pastries
+  // Category 2: Dry Sweets
   {
-    category: 'Cakes & Pastries',
+    category: 'Dry Sweets',
     items: [
-      { name: 'Vanilla Cupcake', price: 3.00, in_stock: 15 },
-      { name: 'Chocolate Lava Cake', price: 4.50, in_stock: 12 },
-      { name: 'Red Velvet Cake Slice', price: 4.25, in_stock: 18 },
-      { name: 'Strawberry Cheesecake', price: 5.00, in_stock: 10 }
+      { name: 'Ladoo', price: 10.00, in_stock: 40 },
+      { name: 'Barfi', price: 14.00, in_stock: 35 },
+      { name: 'Jalebi', price: 11.00, in_stock: 45 },
+      { name: 'Soan Papdi', price: 13.50, in_stock: 30 },
+      { name: 'Besan Ladoo', price: 12.00, in_stock: 38 }
     ]
   },
   
-  // Category 3: Candies & Gummies
+  // Category 3: Festival Specials
   {
-    category: 'Candies & Gummies',
+    category: 'Festival Specials',
     items: [
-      { name: 'Gummy Bears', price: 1.75, in_stock: 50 },
-      { name: 'Sour Patch Kids', price: 2.00, in_stock: 45 },
-      { name: 'Jelly Beans', price: 1.50, in_stock: 60 },
-      { name: 'Hard Candies', price: 1.25, in_stock: 35 },
-      { name: 'Lollipops', price: 0.75, in_stock: 80 }
+      { name: 'Modak', price: 20.00, in_stock: 25 },
+      { name: 'Puran Poli', price: 25.00, in_stock: 20 },
+      { name: 'Gujiya', price: 18.50, in_stock: 30 },
+      { name: 'Karanji', price: 17.00, in_stock: 32 }
     ]
   },
   
-  // Category 4: Ice Cream & Frozen
+  // Category 4: North Indian Sweets
   {
-    category: 'Ice Cream & Frozen',
+    category: 'North Indian Sweets',
     items: [
-      { name: 'Vanilla Ice Cream', price: 3.75, in_stock: 20 },
-      { name: 'Chocolate Ice Cream', price: 3.75, in_stock: 18 },
-      { name: 'Strawberry Ice Cream', price: 3.50, in_stock: 15 },
-      { name: 'Mint Chocolate Chip', price: 4.00, in_stock: 12 },
-      { name: 'Cookie Dough Ice Cream', price: 4.25, in_stock: 10 }
+      { name: 'Peda', price: 15.00, in_stock: 35 },
+      { name: 'Kulfi', price: 19.00, in_stock: 28 },
+      { name: 'Phirni', price: 24.00, in_stock: 22 },
+      { name: 'Shahi Tukda', price: 28.00, in_stock: 18 },
+      { name: 'Gajar Ka Halwa', price: 26.50, in_stock: 25 }
     ]
   },
   
-  // Category 5: Snacks & Treats
+  // Category 5: South Indian Sweets
   {
-    category: 'Snacks & Treats',
+    category: 'South Indian Sweets',
     items: [
-      { name: 'Caramel Popcorn', price: 2.25, in_stock: 30 },
-      { name: 'Chocolate Covered Nuts', price: 3.50, in_stock: 20 },
-      { name: 'Trail Mix', price: 2.75, in_stock: 25 },
-      { name: 'Rice Krispies Treats', price: 2.00, in_stock: 35 }
+      { name: 'Payasam', price: 23.00, in_stock: 20 },
+      { name: 'Mysore Pak', price: 21.00, in_stock: 30 },
+      { name: 'Pongal', price: 16.00, in_stock: 35 },
+      { name: 'Kesari', price: 14.50, in_stock: 40 },
+      { name: 'Coconut Burfi', price: 19.50, in_stock: 28 }
     ]
   }
 ];
