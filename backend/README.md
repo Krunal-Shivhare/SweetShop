@@ -77,12 +77,12 @@ GET /api/sweets
   "data": [
     {
       "id": 1,
-      "name": "Chocolate Truffle",
-      "category": "Chocolate",
-      "price": 2.50,
+      "name": "Gulab Jamun",
+      "category": "Dessert",
+      "price": 25,
       "in_stock": 25,
-      "created_at": "2024-01-15T10:30:00.000Z",
-      "updated_at": "2024-01-15T10:30:00.000Z"
+      "created_at": "2025-07-17T10:30:00.000Z",
+      "updated_at": "2025-07-17T10:30:00.000Z"
     }
   ],
   "count": 1
@@ -114,12 +114,6 @@ GET /api/sweets/low-stock
 POST /api/sweets
 Content-Type: application/json
 
-{
-  "name": "Vanilla Cupcake",
-  "category": "Cakes",
-  "price": 3.00,
-  "in_stock": 15
-}
 ```
 
 #### Update Sweet
@@ -128,9 +122,9 @@ PUT /api/sweets/:id
 Content-Type: application/json
 
 {
-  "name": "Updated Vanilla Cupcake",
-  "category": "Cakes",
-  "price": 3.50,
+  "name": "Updated Besan Ladoo",
+  "category": "Dry Sweets",
+  "price": 18,
   "in_stock": 20
 }
 ```
@@ -194,14 +188,6 @@ You can insert sample data using MySQL:
 
 ```sql
 INSERT INTO sweets (name, category, price, in_stock) VALUES
-('Chocolate Truffle', 'Chocolate', 2.50, 25),
-('Vanilla Cupcake', 'Cakes', 3.00, 15),
-('Strawberry Cheesecake', 'Cakes', 4.50, 8),
-('Gummy Bears', 'Candies', 1.75, 50),
-('Dark Chocolate Bar', 'Chocolate', 2.00, 30),
-('Red Velvet Cake', 'Cakes', 5.00, 12),
-('Caramel Popcorn', 'Snacks', 2.25, 20),
-('Mint Chocolate Chip', 'Ice Cream', 3.75, 18);
 ```
 
 ## Development
